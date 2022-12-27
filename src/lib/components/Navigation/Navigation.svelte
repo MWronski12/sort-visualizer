@@ -1,8 +1,29 @@
 <script>
   import { bubbleSort } from "../../sorts/bubbleSort";
+  import { store } from "../../../stores";
 
-  export let props;
-  let value = props.size;
+  let value = store.array.length;
+
+  console.log(store.less(0, 1));
+
+  const handleBubbleSort = () => {
+    bubbleSort(store.array, store.less, store.exch);
+  }
+
+  const handleSlider = (e) => {
+    store.set(parseInt(e.target.value));
+  };
+
+  const handleGenNewArray = () => {
+    store.set(store.array.length);
+  };
+
+  const handleExchangeRandomElements = () => {
+    store.exch(
+      Math.floor(store.array.length * Math.random()),
+      Math.floor(store.array.length * Math.random())
+    );
+  };
 </script>
 
 <div class="w-full h-20 bg-purple-500 px-6">
@@ -13,28 +34,12 @@
       max="100"
       step="1"
       bind:value
-      on:input={(e) => props.changeArraySize(parseInt(e.target.value))}
+      on:input={handleSlider}
     />
-    <button on:click={() => props.genNewArray(props.size)}
-      >Generate New Array
-    </button>
-    <button
-      on:click={() =>
-        props.exchange(
-          Math.floor(props.size * Math.random()),
-          Math.floor(props.size * Math.random())
-        )}
+    <button on:click={handleGenNewArray}>Generate New Array</button>
+    <button on:click={handleExchangeRandomElements}
       >Exchange Random Elements
     </button>
-    <button
-      on:click={() =>
-        bubbleSort(
-          props.array,
-          props.less,
-          props.exchange,
-          props.delayDurationMs
-        )}
-      >Bubble sort
-    </button>
+    <button on:click={handleBubbleSort}>Bubble sort</button>
   </div>
 </div>
