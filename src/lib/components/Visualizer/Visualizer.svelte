@@ -1,6 +1,6 @@
 <script>
   import Node from "./Node.svelte";
-  import { store } from "../../../stores";
+  import { store } from "../../store"
 
   $: array = store.array;
   store.subscribe(() => (array = store.array));

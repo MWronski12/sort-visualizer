@@ -1,5 +1,5 @@
 <script>
-  import { store } from "../../../stores";
+  import { store } from "../../store";
 
   export let index;
   export let value;

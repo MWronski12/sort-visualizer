@@ -1,4 +1,4 @@
-import { bubbleSort } from "./lib/sorts/bubbleSort";
+import { bubbleSort } from "./sorts/bubbleSort";
 
 const INITIAL_SIZE = 10;
 
@@ -8,6 +8,8 @@ class Store {
     this.observers = [];
     this.lastCompared = [-1, -1];
     this.lastExchanged = [-1, -1];
+    this.timeoutId = null;
+    this.delayMs = 100;
   }
 
   /* --------------------------------- public --------------------------------- */
@@ -34,14 +36,24 @@ class Store {
     this.array[j] = temp;
   }
 
-  clearIndicators() {
-    this.setLastCompared(-1, -1);
-    this.setLastExchanged(-1, -1);
-    this.notifyAll();
+  start(generator) {
+    this.stop();
+
+    let that = this;
+
+    function loop() {
+      generator.next();
+      that.timeoutId = setTimeout(() => {
+        loop();
+      }, that.delayMs);
+    }
+
+    loop();
   }
 
-  getBubbleSortGenerator() {
-    return bubbleSort(this);
+  stop() {
+    clearTimeout(this.timeoutId);
+    this.clearIndicators();
   }
 
   /* --------------------------------- private -------------------------------- */
@@ -63,6 +75,12 @@ class Store {
 
   setLastExchanged(i, j) {
     this.lastExchanged = [i, j];
+  }
+
+  clearIndicators() {
+    this.setLastCompared(-1, -1);
+    this.setLastExchanged(-1, -1);
+    this.notifyAll();
   }
 }
 

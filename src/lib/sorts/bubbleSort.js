@@ -11,6 +11,5 @@ export function* bubbleSort(store) {
     }
   }
 
-  store.setLastCompared(-1, -1);
-  store.setLastExchanged(-1, -1);
+  store.stop();
 }
