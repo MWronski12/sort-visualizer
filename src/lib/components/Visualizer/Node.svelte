@@ -4,8 +4,8 @@
   export let index;
   export let value;
 
-  let isLastExchanged = store.lastExchanged.includes(index);
-  let isLastCompared = store.lastCompared.includes(index);
+  $: isLastExchanged = store.lastExchanged.includes(index);
+  $: isLastCompared = store.lastCompared.includes(index);
 
   store.subscribe(() => {
     isLastExchanged = store.lastExchanged.includes(index);
@@ -18,7 +18,7 @@
     : isLastCompared
     ? "bg-green-500"
     : "bg-gradient-to-b from-violet-500 to-fuchsia-500";
-    
+
 </script>
 
 <div class="node grow {backgroundColorClass}" style={cssVarStyles} />

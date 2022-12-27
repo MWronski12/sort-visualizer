@@ -4,10 +4,24 @@
 
   let value = store.array.length;
 
-  console.log(store.less(0, 1));
+  let intervalId = null;
+  let delayMs = 100;
 
   const handleBubbleSort = () => {
-    bubbleSort(store.array, store.less, store.exch);
+    function loop(generator) {
+      generator.next();
+      intervalId = setTimeout(() => {
+        loop(generator);
+      }, delayMs);
+    }
+
+    let generator = store.getBubbleSortGenerator();
+    loop(generator);
+  };
+
+  const handleStop = () => {
+    clearInterval(intervalId);
+    store.clearIndicators();
   }
 
   const handleSlider = (e) => {
@@ -41,5 +55,6 @@
       >Exchange Random Elements
     </button>
     <button on:click={handleBubbleSort}>Bubble sort</button>
+    <button on:click={handleStop}>Stop!</button>
   </div>
 </div>

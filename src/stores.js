@@ -1,11 +1,13 @@
+import { bubbleSort } from "./lib/sorts/bubbleSort";
+
 const INITIAL_SIZE = 10;
 
-class ObservableArray {
+class Store {
   constructor(initialSize) {
     this.array = this.genNewArray(initialSize);
     this.observers = [];
-    this.lastCompared = [null, null];
-    this.lastExchanged = [null, null];
+    this.lastCompared = [-1, -1];
+    this.lastExchanged = [-1, -1];
   }
 
   /* --------------------------------- public --------------------------------- */
@@ -26,10 +28,20 @@ class ObservableArray {
 
   exch(i, j) {
     this.setLastExchanged(i, j);
+    this.notifyAll();
     let temp = this.array[i];
     this.array[i] = this.array[j];
     this.array[j] = temp;
+  }
+
+  clearIndicators() {
+    this.setLastCompared(-1, -1);
+    this.setLastExchanged(-1, -1);
     this.notifyAll();
+  }
+
+  getBubbleSortGenerator() {
+    return bubbleSort(this);
   }
 
   /* --------------------------------- private -------------------------------- */
@@ -54,4 +66,4 @@ class ObservableArray {
   }
 }
 
-export const store = new ObservableArray(INITIAL_SIZE);
+export const store = new Store(INITIAL_SIZE);
