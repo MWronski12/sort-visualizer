@@ -1,5 +1,3 @@
-import { bubbleSort } from "./sorts/bubbleSort";
-
 const INITIAL_SIZE = 10;
 
 class Store {
@@ -8,8 +6,9 @@ class Store {
     this.observers = [];
     this.lastCompared = [-1, -1];
     this.lastExchanged = [-1, -1];
-    this.timeoutId = null;
     this.delayMs = 100;
+    this.generator = null;
+    this.timeoutId = null;
   }
 
   /* --------------------------------- public --------------------------------- */
@@ -36,13 +35,16 @@ class Store {
     this.array[j] = temp;
   }
 
-  start(generator) {
-    this.stop();
+  start() {
+    if (this.generator == null) {
+      return;
+    }
 
+    this.stop();
     let that = this;
 
     function loop() {
-      generator.next();
+      that.generator.next();
       that.timeoutId = setTimeout(() => {
         loop();
       }, that.delayMs);
@@ -54,6 +56,14 @@ class Store {
   stop() {
     clearTimeout(this.timeoutId);
     this.clearIndicators();
+  }
+
+  setGenerator(generator) {
+    this.generator = generator(this);
+  }
+
+  setDelayMs(delayMs) {
+    this.delayMs = delayMs;
   }
 
   /* --------------------------------- private -------------------------------- */

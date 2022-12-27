@@ -15,4 +15,8 @@
     width: 100vw;
     height: 100vh;
   }
+
+  * {
+    font-family: "Courier New", Courier, monospace;
+  }
 </style>

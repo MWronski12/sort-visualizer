@@ -1,9 +1,7 @@
 <script>
   import { store } from "../../store";
-  import { bubbleSort } from "../../sorts/bubbleSort";
-  import { selectionSort } from "../../sorts/selectionSort";
-  import { insertionSort } from "../../sorts/insertionSort";
-  import { shellSort } from "../../sorts/shellSort";
+
+  import sorts from "../../sorts";
 
   let arrayLength = store.array.length;
 
@@ -11,8 +9,9 @@
   $: logarithmicDelay = Math.floor(10000 / Math.log(arrayLength));
 
   const handleSort = (sortFunc, delay) => {
-    store.delayMs = delay;
-    store.start(sortFunc(store));
+    store.setGenerator(sortFunc);
+    store.setDelayMs(delay);
+    store.start();
   };
 
   const handleSliderChange = () => {
@@ -26,37 +25,26 @@
   };
 </script>
 
-<div class="w-full h-20 bg-purple-500 px-6">
-  <div class="max-w-5xl h-full mx-auto flex items-center gap-12">
+<div class="w-full min-h-20 bg-gradient-to-tr from-violet-500 to-fuchsia-500 px-6">
+  <div
+    class="max-w-5xl h-full mx-auto flex items-center gap-x-12 gap-y-4 flex-wrap py-4"
+  >
     <input
       type="range"
       min="5"
       max="100"
       step="1"
       bind:value={arrayLength}
-      on:change={handleSliderChange}
+      on:input={handleSliderChange}
     />
     <button on:click={handleGenNewArray}>Generate New Array</button>
-    <button
-      on:click={() => {
-        handleSort(bubbleSort, quadraticDelay);
-      }}>Bubble sort</button
-    >
-    <button
-      on:click={() => {
-        handleSort(selectionSort, quadraticDelay);
-      }}>Selection sort</button
-    >
-    <button
-      on:click={() => {
-        handleSort(insertionSort, quadraticDelay);
-      }}>Insertion sort</button
-    >
-    <button
-      class="btn"
-      on:click={() => {
-        handleSort(shellSort, quadraticDelay);
-      }}>Shell sort</button
-    >
+
+    {#each sorts as sort}
+      <button
+        on:click={() => {
+          handleSort(sort.sort, sort.delay(arrayLength));
+        }}>{sort.name}</button
+      >
+    {/each}
   </div>
 </div>
