@@ -43,6 +43,7 @@ class Store {
   stop() {
     clearTimeout(this.timeoutId);
     this.clearIndicators();
+    this.notifyAll();
   }
 
   setGenerator(generator) {
@@ -61,11 +62,11 @@ class Store {
   }
 
   exch(i, j) {
-    this.setLastExchanged(i, j);
-    this.notifyAll();
     let temp = this.array[i];
     this.array[i] = this.array[j];
     this.array[j] = temp;
+    this.setLastExchanged(i, j);
+    this.notifyAll();
   }
 
   setElement(k, val) {
@@ -98,7 +99,6 @@ class Store {
   clearIndicators() {
     this.setLastCompared(-1, -1);
     this.setLastExchanged(-1, -1);
-    this.notifyAll();
   }
 }
 
