@@ -1,5 +1,5 @@
-const INITIAL_SIZE = 10;
-
+// Observable object providing utilities for manipulating
+// the array, animating and sorting
 class Store {
   constructor(initialSize) {
     this.array = this.genNewArray(initialSize);
@@ -11,7 +11,7 @@ class Store {
     this.timeoutId = null;
   }
 
-  /* --------------------------------- public --------------------------------- */
+  /* ------------------------------ Main utility ------------------------------ */
   subscribe(handleNotify) {
     this.observers.push(handleNotify);
   }
@@ -21,20 +21,7 @@ class Store {
     this.notifyAll();
   }
 
-  less(i, j) {
-    this.setLastCompared(i, j);
-    this.notifyAll();
-    return this.array[i] < this.array[j];
-  }
-
-  exch(i, j) {
-    this.setLastExchanged(i, j);
-    this.notifyAll();
-    let temp = this.array[i];
-    this.array[i] = this.array[j];
-    this.array[j] = temp;
-  }
-
+  /* --------------------------- Animation utilities -------------------------- */
   start() {
     if (this.generator == null) {
       return;
@@ -66,6 +53,21 @@ class Store {
     this.delayMs = delayMs;
   }
 
+  /* ---------------------------- Sorting utilities --------------------------- */
+  less(i, j) {
+    this.setLastCompared(i, j);
+    this.notifyAll();
+    return this.array[i] < this.array[j];
+  }
+
+  exch(i, j) {
+    this.setLastExchanged(i, j);
+    this.notifyAll();
+    let temp = this.array[i];
+    this.array[i] = this.array[j];
+    this.array[j] = temp;
+  }
+
   setElement(k, val) {
     this.array[k] = val;
     this.setLastExchanged(k, -1);
@@ -82,7 +84,7 @@ class Store {
   genNewArray(size) {
     return new Array(size)
       .fill(0)
-      .map((value) => Math.floor(101 * Math.random()));
+      .map((value) => Math.ceil(100 * Math.random()));
   }
 
   setLastCompared(i, j) {
@@ -100,4 +102,5 @@ class Store {
   }
 }
 
+const INITIAL_SIZE = 10;
 export const store = new Store(INITIAL_SIZE);

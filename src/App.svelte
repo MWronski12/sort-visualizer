@@ -1,9 +1,9 @@
 <script>
-  import MyApp from "./lib/components/MyApp.svelte";
+  import Main from "./lib/components/Main.svelte";
 </script>
 
 <main>
-  <MyApp />
+  <Main />
 </main>
 
 <style global lang="postcss">
