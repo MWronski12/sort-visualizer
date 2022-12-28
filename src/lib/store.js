@@ -66,6 +66,12 @@ class Store {
     this.delayMs = delayMs;
   }
 
+  setElement(k, val) {
+    this.array[k] = val;
+    this.setLastExchanged(k, -1);
+    this.notifyAll();
+  }
+
   /* --------------------------------- private -------------------------------- */
   notifyAll() {
     for (const handleNotify of this.observers) {

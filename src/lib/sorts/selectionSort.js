@@ -1,22 +1,18 @@
 export function* selectionSort(store) {
   let n = store.array.length;
 
-  for (var i = 0; i < n; i++) {
+  for (let i = 0; i < n; i++) {
     let min = i;
 
-    for (var j = i + 1; j < n; j++) {
-      let isLess = store.less(j, min);
-      yield;
-
-      if (isLess) {
+    for (let j = i + 1; j < n; j++) {
+      if (store.less(j, min)) {
         min = j;
       }
-    }
-
-    if (i != min) {
-      store.exch(i, min);
       yield;
     }
+
+    store.exch(i, min);
+    yield;
   }
 
   store.stop();

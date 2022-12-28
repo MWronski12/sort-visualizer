@@ -5,9 +5,9 @@ export function* insertionSort(store) {
     for (let j = i - 1; j >= 0 && store.less(j + 1, j); j--) {
       yield;
       store.exch(j + 1, j);
-      yield;
     }
+    yield;
   }
 
-  store.clearIndicators();
+  store.stop();
 }

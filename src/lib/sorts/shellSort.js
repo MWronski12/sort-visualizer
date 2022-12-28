@@ -1,17 +1,22 @@
 export function* shellSort(store) {
   let n = store.array.length;
+  let h = 1;
 
-  for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
-    for (let i = gap; i < n; i += 1) {
-      let temp = store.array[i];
-      let j;
-      for (j = i; j >= gap && store.array[j - gap] > temp; j -= gap) {
+  // h = 3h + 1 sequence is tested to be well performant
+  while (h < Math.floor(n / 3)) h = Math.floor(3 * h + 1);
+
+  while (h > 0) {
+    console.log(h + "-sorting...");
+
+    for (let i = h; i < n; i++) {
+      for (let j = i; j >= h && store.less(j, j - h); j -= h) {
         yield;
-        store.array[j] = store.array[j - gap];
+        store.exch(j, j - h);
       }
-      store.array[j] = temp;
       yield;
     }
+
+    h = (h - 1) / 3;
   }
 
   store.stop();

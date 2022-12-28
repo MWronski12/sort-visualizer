@@ -2,13 +2,17 @@ import { bubbleSort } from "./bubbleSort";
 import { insertionSort } from "./insertionSort";
 import { selectionSort } from "./selectionSort";
 import { shellSort } from "./shellSort";
+import { mergeSort } from "./mergeSort";
+import { quickSort } from "./quickSort";
 
 function getQuadraticDelay(arrayLength) {
-  return Math.floor(10000 / Math.pow(arrayLength, 2));
+  // Most quadratic sorts are ~ (n^2)/2
+  return Math.floor(10000 / (Math.pow(arrayLength, 2) / 2));
 }
 
-function getLogarithmicDelay(arrayLength) {
-  return Math.floor(10000 / Math.log(arrayLength));
+function getLinearithmicDelay(arrayLength) {
+  // Linearithmic sorts are running n*log2(n)
+  return Math.floor(10000 / (arrayLength * Math.log2(arrayLength)));
 }
 
 export default [
@@ -30,6 +34,16 @@ export default [
   {
     name: "Shell Sort",
     sort: shellSort,
-    delay: getLogarithmicDelay,
+    delay: getLinearithmicDelay,
+  },
+  {
+    name: "Merge Sort",
+    sort: mergeSort,
+    delay: getLinearithmicDelay,
+  },
+  {
+    name: "Quick Sort",
+    sort: quickSort,
+    delay: getLinearithmicDelay,
   },
 ];
