@@ -102,5 +102,5 @@ class Store {
   }
 }
 
-const INITIAL_SIZE = 10;
+const INITIAL_SIZE = 50;
 export const store = new Store(INITIAL_SIZE);
