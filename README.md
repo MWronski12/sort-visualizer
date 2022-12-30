@@ -1,5 +1,7 @@
 # Sort Visualizer
 
+https://mwronski12.github.io/sort-visualizer/
+
 ## To run:
 
 - Make sure You have node installed
