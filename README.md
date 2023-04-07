@@ -24,6 +24,7 @@ https://mwronski12.github.io/sort-visualizer/
 - Shell Sort
 - Merge Sort
 - Quick Sort
+- Heap Sort
 
 ## Preview
 
