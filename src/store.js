@@ -83,9 +83,10 @@ class Store {
   }
 
   genNewArray(size) {
-    return new Array(size)
-      .fill(0)
-      .map((value) => Math.ceil(100 * Math.random()));
+    let arr = new Array(size).fill(0);
+    for (let i = 1; i <= size; i++) arr[i] = 100 * (i / size);
+    arr = arr.sort((a, b) => 0.5 - Math.random());
+    return arr;
   }
 
   setLastCompared(i, j) {

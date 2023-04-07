@@ -26,7 +26,6 @@ class heap {
         } else {
           j = i * 2;
         }
-        yield;
       }
       if (this.less(i, j)) {
         yield;
