@@ -4,6 +4,7 @@ import { selectionSort } from "./selectionSort";
 import { shellSort } from "./shellSort";
 import { mergeSort } from "./mergeSort";
 import { quickSort } from "./quickSort";
+import { heapSort } from "./heapSort";
 
 function getQuadraticDelay(arrayLength) {
   // Most quadratic sorts are ~ (n^2)/2
@@ -44,6 +45,11 @@ export default [
   {
     name: "Quick Sort",
     sort: quickSort,
+    delay: getLinearithmicDelay,
+  },
+  {
+    name: "Heap Sort",
+    sort: heapSort,
     delay: getLinearithmicDelay,
   },
 ];
